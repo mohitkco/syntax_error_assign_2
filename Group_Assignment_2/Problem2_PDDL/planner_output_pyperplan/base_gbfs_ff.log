@@ -1,0 +1,21 @@
+2026-10-28 13:42:08,367 INFO     using search: greedy_best_first_search
+2026-10-28 13:42:08,367 INFO     using heuristic: hFFHeuristic
+2026-10-28 13:42:08,367 INFO     Parsing Domain /mnt/user-data/outputs/Group_Assignment_2/Problem2_PDDL/Domain.pddl
+2026-10-28 13:42:08,464 INFO     Parsing Problem /mnt/user-data/outputs/Group_Assignment_2/Problem2_PDDL/Problem.pddl
+2026-10-28 13:42:08,564 INFO     9 Predicates parsed
+2026-10-28 13:42:08,564 INFO     5 Actions parsed
+2026-10-28 13:42:08,564 INFO     16 Objects parsed
+2026-10-28 13:42:08,564 INFO     0 Constants parsed
+2026-10-28 13:42:08,564 INFO     Grounding start: mars-rover-base
+2026-10-28 13:42:08,567 INFO     Relevance analysis removed 0 facts
+2026-10-28 13:42:08,567 INFO     Grounding end: mars-rover-base
+2026-10-28 13:42:08,567 INFO     62 Variables created
+2026-10-28 13:42:08,567 INFO     162 Operators created
+2026-10-28 13:42:08,567 INFO     Search start: mars-rover-base
+2026-10-28 13:42:08,568 INFO     Initial h value: 17.000000
+2026-10-28 13:42:08,602 INFO     Goal reached. Start extraction of solution.
+2026-10-28 13:42:08,602 INFO     48 Nodes expanded
+2026-10-28 13:42:08,602 INFO     Search end: mars-rover-base
+2026-10-28 13:42:08,602 INFO     Search time: 0.035
+2026-10-28 13:42:08,602 INFO     Plan length: 32
+2026-10-28 13:42:08,604 INFO     validate could not be found on the PATH so the plan can not be validated.

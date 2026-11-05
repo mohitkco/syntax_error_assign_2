@@ -1,0 +1,237 @@
+==========================================================================================
+Planner: fd | Scenario: base      | Configuration: satisficing (greedy best-first, h_FF)
+==========================================================================================
+Plan:
+   1. (move curiosity base sitea)
+   2. (collect-soft curiosity rock1 sitea bay1)
+   3. (move curiosity sitea base)
+   4. (deposit curiosity rock1 base bay1)
+   5. (move curiosity base siteb)
+   6. (move curiosity siteb sited)
+   7. (move curiosity sited sitee)
+   8. (pick-drill curiosity drill1 sitee)
+   9. (move curiosity sitee sited)
+  10. (collect-soft curiosity rock4 sited bay1)
+  11. (move curiosity sited siteb)
+  12. (move curiosity siteb base)
+  13. (deposit curiosity rock4 base bay1)
+  14. (move curiosity base siteb)
+  15. (collect-soft curiosity rock2 siteb bay2)
+  16. (move curiosity siteb base)
+  17. (deposit curiosity rock2 base bay2)
+  18. (move curiosity base sitea)
+  19. (move curiosity sitea sitec)
+  20. (collect-hard curiosity rock3 sitec bay1 drill1)
+  21. (move curiosity sitec sitea)
+  22. (move curiosity sitea base)
+  23. (deposit curiosity rock3 base bay1)
+  24. (move curiosity base sitea)
+  25. (move curiosity sitea sitec)
+  26. (move curiosity sitec sitee)
+  27. (move curiosity sitee sitef)
+  28. (collect-hard curiosity rock5 sitef bay1 drill1)
+  29. (move curiosity sitef sitee)
+  30. (move curiosity sitee sitec)
+  31. (move curiosity sitec sitea)
+  32. (move curiosity sitea base)
+  33. (deposit curiosity rock5 base bay1)
+
+Plan length (total number of actions) : 33   (moves: 22, non-move: 11)
+States expanded                        : 68
+Planning (search) time                 : 0.001 s   (wall clock incl. translation: 0.11 s)
+
+Goal verification (step-by-step simulation):
+  Final state facts of interest:
+    rover-at  : ['rover-at curiosity base']
+    has-drill : ['has-drill curiosity drill1']
+    bay-empty : ['bay-empty bay1', 'bay-empty bay2']
+    stored    : []
+    rock-at   : ['rock-at rock1 base', 'rock-at rock2 base', 'rock-at rock3 base', 'rock-at rock4 base', 'rock-at rock5 base']
+    drill-at  : []
+  Rocks at Base : ['rock1', 'rock2', 'rock3', 'rock4', 'rock5']
+  Both bays empty : True
+  Rover at Base   : True
+  ==> GOAL SATISFIED: True
+==========================================================================================
+Planner: fd | Scenario: base      | Configuration: optimal (A*, admissible LM-cut)
+==========================================================================================
+Plan:
+   1. (move curiosity base siteb)
+   2. (collect-soft curiosity rock2 siteb bay1)
+   3. (move curiosity siteb sited)
+   4. (collect-soft curiosity rock4 sited bay2)
+   5. (move curiosity sited siteb)
+   6. (move curiosity siteb base)
+   7. (deposit curiosity rock2 base bay1)
+   8. (deposit curiosity rock4 base bay2)
+   9. (move curiosity base sitea)
+  10. (move curiosity sitea sitec)
+  11. (move curiosity sitec sitee)
+  12. (pick-drill curiosity drill1 sitee)
+  13. (move curiosity sitee sitef)
+  14. (collect-hard curiosity rock5 sitef bay1 drill1)
+  15. (move curiosity sitef sitee)
+  16. (move curiosity sitee sitec)
+  17. (collect-hard curiosity rock3 sitec bay2 drill1)
+  18. (move curiosity sitec sitea)
+  19. (move curiosity sitea base)
+  20. (deposit curiosity rock3 base bay2)
+  21. (deposit curiosity rock5 base bay1)
+  22. (move curiosity base sitea)
+  23. (collect-soft curiosity rock1 sitea bay1)
+  24. (move curiosity sitea base)
+  25. (deposit curiosity rock1 base bay1)
+
+Plan length (total number of actions) : 25   (moves: 14, non-move: 11)
+States expanded                        : 5776
+Planning (search) time                 : 0.252 s   (wall clock incl. translation: 0.36 s)
+
+Goal verification (step-by-step simulation):
+  Final state facts of interest:
+    rover-at  : ['rover-at curiosity base']
+    has-drill : ['has-drill curiosity drill1']
+    bay-empty : ['bay-empty bay1', 'bay-empty bay2']
+    stored    : []
+    rock-at   : ['rock-at rock1 base', 'rock-at rock2 base', 'rock-at rock3 base', 'rock-at rock4 base', 'rock-at rock5 base']
+    drill-at  : []
+  Rocks at Base : ['rock1', 'rock2', 'rock3', 'rock4', 'rock5']
+  Both bays empty : True
+  Rover at Base   : True
+  ==> GOAL SATISFIED: True
+==========================================================================================
+Planner: fd | Scenario: extended  | Configuration: satisficing (greedy best-first, h_FF)
+==========================================================================================
+Plan:
+   1. (move curiosity base sitea)
+   2. (collect-soft curiosity rock1 sitea bay1)
+   3. (move curiosity sitea base)
+   4. (deposit curiosity rock1 base bay1)
+   5. (move curiosity base sitea)
+   6. (move curiosity sitea sitec)
+   7. (move curiosity sitec sitee)
+   8. (pick-drill curiosity drill1 sitee)
+   9. (move curiosity sitee sitec)
+  10. (collect-hard curiosity rock3 sitec bay1 drill1)
+  11. (move curiosity sitec sitea)
+  12. (move curiosity sitea base)
+  13. (deposit curiosity rock3 base bay1)
+  14. (move curiosity base sitea)
+  15. (move curiosity sitea sitec)
+  16. (move curiosity sitec sited)
+  17. (move curiosity sited siteb)
+  18. (collect-soft curiosity rock2 siteb bay1)
+  19. (move curiosity siteb sited)
+  20. (collect-soft curiosity rock4 sited bay2)
+  21. (move curiosity sited sitee)
+  22. (move curiosity sitee sitec)
+  23. (move curiosity sitec sitea)
+  24. (move curiosity sitea base)
+  25. (deposit curiosity rock2 base bay1)
+  26. (deposit curiosity rock4 base bay2)
+  27. (move curiosity base sitea)
+  28. (move curiosity sitea sitec)
+  29. (move curiosity sitec sitee)
+  30. (move curiosity sitee sitef)
+  31. (collect-hard curiosity rock5 sitef bay1 drill1)
+  32. (collect-hard curiosity rock7 sitef bay2 drill1)
+  33. (move curiosity sitef sitee)
+  34. (move curiosity sitee sitec)
+  35. (move curiosity sitec sitea)
+  36. (move curiosity sitea base)
+  37. (deposit curiosity rock5 base bay1)
+  38. (deposit curiosity rock7 base bay2)
+  39. (move curiosity base sitea)
+  40. (move curiosity sitea sitec)
+  41. (move curiosity sitec sitee)
+  42. (collect-soft curiosity rock6 sitee bay1)
+  43. (move curiosity sitee sitec)
+  44. (move curiosity sitec sitea)
+  45. (move curiosity sitea base)
+  46. (deposit curiosity rock6 base bay1)
+
+Plan length (total number of actions) : 46   (moves: 31, non-move: 15)
+States expanded                        : 143
+Planning (search) time                 : 0.002 s   (wall clock incl. translation: 0.13 s)
+
+Goal verification (step-by-step simulation):
+  Final state facts of interest:
+    rover-at  : ['rover-at curiosity base']
+    has-drill : ['has-drill curiosity drill1']
+    bay-empty : ['bay-empty bay1', 'bay-empty bay2']
+    stored    : []
+    rock-at   : ['rock-at rock1 base', 'rock-at rock2 base', 'rock-at rock3 base', 'rock-at rock4 base', 'rock-at rock5 base', 'rock-at rock6 base', 'rock-at rock7 base']
+    drill-at  : []
+  Rocks at Base : ['rock1', 'rock2', 'rock3', 'rock4', 'rock5', 'rock6', 'rock7']
+  Both bays empty : True
+  Rover at Base   : True
+  ==> GOAL SATISFIED: True
+==========================================================================================
+Planner: fd | Scenario: extended  | Configuration: optimal (A*, admissible LM-cut)
+==========================================================================================
+Plan:
+   1. (move curiosity base sitea)
+   2. (move curiosity sitea sitec)
+   3. (move curiosity sitec sited)
+   4. (collect-soft curiosity rock4 sited bay1)
+   5. (move curiosity sited siteb)
+   6. (collect-soft curiosity rock2 siteb bay2)
+   7. (move curiosity siteb sited)
+   8. (move curiosity sited sitee)
+   9. (pick-drill curiosity drill1 sitee)
+  10. (move curiosity sitee sitec)
+  11. (move curiosity sitec sitea)
+  12. (move curiosity sitea base)
+  13. (deposit curiosity rock2 base bay2)
+  14. (deposit curiosity rock4 base bay1)
+  15. (move curiosity base sitea)
+  16. (move curiosity sitea sitec)
+  17. (move curiosity sitec sitee)
+  18. (move curiosity sitee sitef)
+  19. (collect-hard curiosity rock5 sitef bay1 drill1)
+  20. (collect-hard curiosity rock7 sitef bay2 drill1)
+  21. (move curiosity sitef sitee)
+  22. (move curiosity sitee sitec)
+  23. (move curiosity sitec sitea)
+  24. (move curiosity sitea base)
+  25. (deposit curiosity rock5 base bay1)
+  26. (deposit curiosity rock7 base bay2)
+  27. (move curiosity base sitea)
+  28. (move curiosity sitea sitec)
+  29. (collect-hard curiosity rock3 sitec bay1 drill1)
+  30. (move curiosity sitec sitee)
+  31. (collect-soft curiosity rock6 sitee bay2)
+  32. (move curiosity sitee sitec)
+  33. (move curiosity sitec sitea)
+  34. (move curiosity sitea base)
+  35. (deposit curiosity rock3 base bay1)
+  36. (deposit curiosity rock6 base bay2)
+  37. (move curiosity base sitea)
+  38. (collect-soft curiosity rock1 sitea bay1)
+  39. (move curiosity sitea base)
+  40. (deposit curiosity rock1 base bay1)
+
+Plan length (total number of actions) : 40   (moves: 25, non-move: 15)
+States expanded                        : 2230060
+Planning (search) time                 : 119.929 s   (wall clock incl. translation: 120.52 s)
+
+Goal verification (step-by-step simulation):
+  Final state facts of interest:
+    rover-at  : ['rover-at curiosity base']
+    has-drill : ['has-drill curiosity drill1']
+    bay-empty : ['bay-empty bay1', 'bay-empty bay2']
+    stored    : []
+    rock-at   : ['rock-at rock1 base', 'rock-at rock2 base', 'rock-at rock3 base', 'rock-at rock4 base', 'rock-at rock5 base', 'rock-at rock6 base', 'rock-at rock7 base']
+    drill-at  : []
+  Rocks at Base : ['rock1', 'rock2', 'rock3', 'rock4', 'rock5', 'rock6', 'rock7']
+  Both bays empty : True
+  Rover at Base   : True
+  ==> GOAL SATISFIED: True
+
+==========================================================================================
+SUMMARY
+==========================================================================================
+Scenario  Configuration                              Plan len  Expanded  Time (s)
+base      satisficing (greedy best-first, h_FF)            33        68     0.001
+base      optimal (A*, admissible LM-cut)                  25      5776     0.252
+extended  satisficing (greedy best-first, h_FF)            46       143     0.002
+extended  optimal (A*, admissible LM-cut)                  40   2230060   119.929

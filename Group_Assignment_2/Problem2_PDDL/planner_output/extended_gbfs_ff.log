@@ -1,0 +1,201 @@
+INFO     planner time limit: None
+INFO     planner memory limit: None
+
+INFO     Running translator.
+INFO     translator stdin: None
+INFO     translator time limit: None
+INFO     translator memory limit: None
+INFO     translator command line string: /usr/bin/python3 -m fast_downward.translate /mnt/user-data/outputs/Group_Assignment_2/Problem2_PDDL/Domain.pddl /mnt/user-data/outputs/Group_Assignment_2/Problem2_PDDL/Problem_extended.pddl --sas-file output.sas
+Parsing...
+Parsing: [0.010s CPU, 0.002s wall-clock]
+Normalizing task... [0.000s CPU, 0.000s wall-clock]
+Instantiating...
+Generating Datalog program... [0.000s CPU, 0.000s wall-clock]
+Normalizing Datalog program...
+Normalizing Datalog program: [0.000s CPU, 0.001s wall-clock]
+Preparing model... [0.000s CPU, 0.000s wall-clock]
+Generated 36 rules.
+Computing model... [0.000s CPU, 0.002s wall-clock]
+359 relevant atoms
+319 auxiliary atoms
+678 final queue length
+923 total queue pushes
+Completing instantiation... [0.000s CPU, 0.002s wall-clock]
+Instantiating: [0.000s CPU, 0.005s wall-clock]
+Computing fact groups...
+Finding invariants...
+17 initial candidates
+Finding invariants: [0.000s CPU, 0.001s wall-clock]
+Checking invariant weight... [0.000s CPU, 0.000s wall-clock]
+Instantiating groups... [0.000s CPU, 0.000s wall-clock]
+Collecting mutex groups... [0.000s CPU, 0.000s wall-clock]
+Choosing groups...
+2 uncovered facts
+Choosing groups: [0.000s CPU, 0.000s wall-clock]
+Building translation key... [0.000s CPU, 0.000s wall-clock]
+Computing fact groups: [0.000s CPU, 0.001s wall-clock]
+Building STRIPS to SAS dictionary... [0.000s CPU, 0.000s wall-clock]
+Building dictionary for full mutex groups... [0.000s CPU, 0.000s wall-clock]
+Building mutex information...
+Building mutex information: [0.000s CPU, 0.000s wall-clock]
+Translating task...
+Processing axioms...
+Simplifying axioms... [0.000s CPU, 0.000s wall-clock]
+Translator axioms removed by simplifying: 0
+Processing axioms: [0.000s CPU, 0.000s wall-clock]
+Translating task: [0.010s CPU, 0.008s wall-clock]
+98 effect conditions simplified
+0 implied preconditions added
+Detecting unreachable propositions...
+0 operators removed
+0 axioms removed
+9 propositions removed
+Detecting unreachable propositions: [0.000s CPU, 0.003s wall-clock]
+Reordering and filtering variables...
+11 of 11 variables necessary.
+2 of 11 mutex groups necessary.
+210 of 210 operators necessary.
+0 of 0 axiom rules necessary.
+Reordering and filtering variables: [0.000s CPU, 0.001s wall-clock]
+Translator variables: 11
+Translator derived variables: 0
+Translator facts: 76
+Translator goal facts: 10
+Translator mutex groups: 2
+Translator total mutex groups size: 16
+Translator operators: 210
+Translator axioms: 0
+Translator task size: 1276
+Translator peak memory: 31076 KB
+Writing output... [0.000s CPU, 0.002s wall-clock]
+Done! [0.020s CPU, 0.024s wall-clock]
+translate exit code: 0
+
+INFO     Running search (release).
+INFO     search stdin: output.sas
+INFO     search time limit: None
+INFO     search memory limit: None
+INFO     search command line string: /home/claude/fd/builds/release/bin/downward --search 'lazy_greedy([ff()],preferred=[ff()])' --internal-plan-file /tmp/tmpuohuf712.plan < output.sas
+[t=0.000152s, 11336 KB] Search code revision: 487e33c
+[t=0.000250s, 11336 KB] reading input...
+[t=0.001142s, 11336 KB] done reading input!
+[t=0.002566s, 11732 KB] Simplifying 406 unary operators... done! [406 unary operators]
+[t=0.002761s, 11732 KB] time to simplify: 0.000218s
+[t=0.002798s, 11732 KB] Initializing additive heuristic...
+[t=0.002807s, 11732 KB] Initializing FF heuristic...
+[t=0.002845s, 11732 KB] Simplifying 406 unary operators... done! [406 unary operators]
+[t=0.002994s, 11732 KB] time to simplify: 0.000164s
+[t=0.003021s, 11732 KB] Initializing additive heuristic...
+[t=0.003030s, 11732 KB] Initializing FF heuristic...
+[t=0.003051s, 11732 KB] Building successor generator... done!
+[t=0.003138s, 11732 KB] peak memory difference for successor generator creation: 0 KB
+[t=0.003145s, 11732 KB] time for successor generation creation: 0.000061s
+[t=0.003155s, 11732 KB] Variables: 11
+[t=0.003162s, 11732 KB] FactPairs: 76
+[t=0.003170s, 11732 KB] Bytes per state: 8
+[t=0.003189s, 11732 KB] Conducting lazy best first search, (real) bound = 2147483647
+[t=0.003223s, 11868 KB] New best heuristic value for ff: 21
+[t=0.003245s, 11868 KB] g=0, 1 evaluated, 0 expanded
+[t=0.003268s, 11868 KB] Initial heuristic value for ff: 21
+[t=0.003278s, 11868 KB] Initial heuristic value for ff: 21
+[t=0.003373s, 11868 KB] New best heuristic value for ff: 20
+[t=0.003385s, 11868 KB] g=3, 8 evaluated, 7 expanded
+[t=0.003449s, 11868 KB] New best heuristic value for ff: 19
+[t=0.003461s, 11868 KB] g=4, 9 evaluated, 8 expanded
+[t=0.003567s, 11868 KB] New best heuristic value for ff: 18
+[t=0.003577s, 11868 KB] g=8, 17 evaluated, 16 expanded
+[t=0.003996s, 11868 KB] New best heuristic value for ff: 17
+[t=0.004007s, 11868 KB] g=12, 51 evaluated, 50 expanded
+[t=0.004028s, 11868 KB] New best heuristic value for ff: 16
+[t=0.004038s, 11868 KB] g=13, 52 evaluated, 51 expanded
+[t=0.004243s, 11868 KB] New best heuristic value for ff: 15
+[t=0.004251s, 11868 KB] g=19, 69 evaluated, 68 expanded
+[t=0.004431s, 11868 KB] New best heuristic value for ff: 14
+[t=0.004444s, 11868 KB] g=21, 79 evaluated, 78 expanded
+[t=0.004649s, 11868 KB] New best heuristic value for ff: 12
+[t=0.004660s, 11868 KB] g=24, 96 evaluated, 95 expanded
+[t=0.004681s, 11868 KB] New best heuristic value for ff: 11
+[t=0.004689s, 11868 KB] g=25, 97 evaluated, 96 expanded
+[t=0.004720s, 11868 KB] New best heuristic value for ff: 10
+[t=0.004730s, 11868 KB] g=26, 99 evaluated, 98 expanded
+[t=0.004964s, 11868 KB] New best heuristic value for ff: 9
+[t=0.004972s, 11868 KB] g=33, 121 evaluated, 120 expanded
+[t=0.005111s, 11868 KB] New best heuristic value for ff: 7
+[t=0.005120s, 11868 KB] g=36, 133 evaluated, 132 expanded
+[t=0.005138s, 11868 KB] New best heuristic value for ff: 6
+[t=0.005146s, 11868 KB] g=37, 134 evaluated, 133 expanded
+[t=0.005174s, 11868 KB] New best heuristic value for ff: 5
+[t=0.005181s, 11868 KB] g=38, 136 evaluated, 135 expanded
+[t=0.005233s, 11868 KB] New best heuristic value for ff: 4
+[t=0.005242s, 11868 KB] g=43, 141 evaluated, 140 expanded
+[t=0.005257s, 11868 KB] New best heuristic value for ff: 3
+[t=0.005264s, 11868 KB] g=44, 142 evaluated, 141 expanded
+[t=0.005278s, 11868 KB] New best heuristic value for ff: 1
+[t=0.005286s, 11868 KB] g=45, 143 evaluated, 142 expanded
+[t=0.005306s, 11868 KB] Solution found!
+[t=0.005319s, 11868 KB] Actual search time: 0.002125s
+move curiosity base sitea (1)
+collect-soft curiosity rock1 sitea bay1 (1)
+move curiosity sitea base (1)
+deposit curiosity rock1 base bay1 (1)
+move curiosity base sitea (1)
+move curiosity sitea sitec (1)
+move curiosity sitec sitee (1)
+pick-drill curiosity drill1 sitee (1)
+move curiosity sitee sitec (1)
+collect-hard curiosity rock3 sitec bay1 drill1 (1)
+move curiosity sitec sitea (1)
+move curiosity sitea base (1)
+deposit curiosity rock3 base bay1 (1)
+move curiosity base sitea (1)
+move curiosity sitea sitec (1)
+move curiosity sitec sited (1)
+move curiosity sited siteb (1)
+collect-soft curiosity rock2 siteb bay1 (1)
+move curiosity siteb sited (1)
+collect-soft curiosity rock4 sited bay2 (1)
+move curiosity sited sitee (1)
+move curiosity sitee sitec (1)
+move curiosity sitec sitea (1)
+move curiosity sitea base (1)
+deposit curiosity rock2 base bay1 (1)
+deposit curiosity rock4 base bay2 (1)
+move curiosity base sitea (1)
+move curiosity sitea sitec (1)
+move curiosity sitec sitee (1)
+move curiosity sitee sitef (1)
+collect-hard curiosity rock5 sitef bay1 drill1 (1)
+collect-hard curiosity rock7 sitef bay2 drill1 (1)
+move curiosity sitef sitee (1)
+move curiosity sitee sitec (1)
+move curiosity sitec sitea (1)
+move curiosity sitea base (1)
+deposit curiosity rock5 base bay1 (1)
+deposit curiosity rock7 base bay2 (1)
+move curiosity base sitea (1)
+move curiosity sitea sitec (1)
+move curiosity sitec sitee (1)
+collect-soft curiosity rock6 sitee bay1 (1)
+move curiosity sitee sitec (1)
+move curiosity sitec sitea (1)
+move curiosity sitea base (1)
+deposit curiosity rock6 base bay1 (1)
+[t=0.005328s, 11868 KB] Plan length: 46 step(s).
+[t=0.005328s, 11868 KB] Plan cost: 46
+[t=0.005328s, 11868 KB] Expanded 143 state(s).
+[t=0.005328s, 11868 KB] Reopened 0 state(s).
+[t=0.005328s, 11868 KB] Evaluated 144 state(s).
+[t=0.005328s, 11868 KB] Evaluations: 287
+[t=0.005328s, 11868 KB] Generated 608 state(s).
+[t=0.005328s, 11868 KB] Dead ends: 0 state(s).
+[t=0.005328s, 11868 KB] Number of registered states: 144
+[t=0.005328s, 11868 KB] Int hash set load factor: 144/256 = 0.562500
+[t=0.005328s, 11868 KB] Int hash set resizes: 8
+[t=0.005328s, 11868 KB] Search time: 0.002140s
+[t=0.005328s, 11868 KB] Total time: 0.005328s
+Solution found.
+Peak memory: 11868 KB
+Remove intermediate file output.sas
+search exit code: 0
+
+INFO     Planner time: 0.09s

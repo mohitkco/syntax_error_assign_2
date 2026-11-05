@@ -1,0 +1,130 @@
+
+==============================================================================
+STEP 1 : Predicate-logic representation (KB)
+==============================================================================
+  F1: all(X) all(Y) ((archivist(X) & verifies(X,Y)) -> trusted(X))
+  F2: all(X) all(Y) ((trusted(X) & (access(X,Y) & sealed(Y))) -> permitted(X,Y))
+  F3: all(X) all(Y) ((inspects(X,Y) & finds_mark(X,Y)) -> verifies(X,Y))
+  F4: all(X) (stored(X,royal_archive) -> sealed(X))
+  F5: stored(scroll_7,royal_archive)
+  F6: access(mira,scroll_7)
+  F7: (inspects(mira,scroll_7) & finds_mark(mira,scroll_7))
+  F8: archivist(mira)
+  Goal to prove: trusted(mira)
+
+==============================================================================
+STEP 2 : Negation of the goal (added as formula 9)
+==============================================================================
+  F9: ~trusted(mira)
+
+==============================================================================
+STEP 3 : Implication removal  (A -> B  becomes  ~A | B)
+==============================================================================
+  F1: all(X) all(Y) (~(archivist(X) & verifies(X,Y)) | trusted(X))
+  F2: all(X) all(Y) (~(trusted(X) & (access(X,Y) & sealed(Y))) | permitted(X,Y))
+  F3: all(X) all(Y) (~(inspects(X,Y) & finds_mark(X,Y)) | verifies(X,Y))
+  F4: all(X) (~stored(X,royal_archive) | sealed(X))
+  F5: stored(scroll_7,royal_archive)
+  F6: access(mira,scroll_7)
+  F7: (inspects(mira,scroll_7) & finds_mark(mira,scroll_7))
+  F8: archivist(mira)
+  F9: ~trusted(mira)
+
+==============================================================================
+STEP 4 : Negation moved inward
+==============================================================================
+  F1: all(X) all(Y) ((~archivist(X) | ~verifies(X,Y)) | trusted(X))
+  F2: all(X) all(Y) ((~trusted(X) | (~access(X,Y) | ~sealed(Y))) | permitted(X,Y))
+  F3: all(X) all(Y) ((~inspects(X,Y) | ~finds_mark(X,Y)) | verifies(X,Y))
+  F4: all(X) (~stored(X,royal_archive) | sealed(X))
+  F5: stored(scroll_7,royal_archive)
+  F6: access(mira,scroll_7)
+  F7: (inspects(mira,scroll_7) & finds_mark(mira,scroll_7))
+  F8: archivist(mira)
+  F9: ~trusted(mira)
+
+==============================================================================
+STEP 5 : Standardise variables apart (distinct names across all formulas)
+==============================================================================
+  F1: all(A) all(B) ((~archivist(A) | ~verifies(A,B)) | trusted(A))
+  F2: all(C) all(D) ((~trusted(C) | (~access(C,D) | ~sealed(D))) | permitted(C,D))
+  F3: all(E) all(F) ((~inspects(E,F) | ~finds_mark(E,F)) | verifies(E,F))
+  F4: all(G) (~stored(G,royal_archive) | sealed(G))
+  F5: stored(scroll_7,royal_archive)
+  F6: access(mira,scroll_7)
+  F7: (inspects(mira,scroll_7) & finds_mark(mira,scroll_7))
+  F8: archivist(mira)
+  F9: ~trusted(mira)
+
+==============================================================================
+STEP 6 : Skolemisation
+==============================================================================
+  F1: all(A) all(B) ((~archivist(A) | ~verifies(A,B)) | trusted(A))
+  F2: all(C) all(D) ((~trusted(C) | (~access(C,D) | ~sealed(D))) | permitted(C,D))
+  F3: all(E) all(F) ((~inspects(E,F) | ~finds_mark(E,F)) | verifies(E,F))
+  F4: all(G) (~stored(G,royal_archive) | sealed(G))
+  F5: stored(scroll_7,royal_archive)
+  F6: access(mira,scroll_7)
+  F7: (inspects(mira,scroll_7) & finds_mark(mira,scroll_7))
+  F8: archivist(mira)
+  F9: ~trusted(mira)
+  (No existential quantifiers occur, so no Skolem constants/functions are needed.)
+
+==============================================================================
+STEP 7 : Conjunctive normal form -> clause set
+==============================================================================
+  C1  { ~archivist(A),  ~verifies(A,B),  trusted(A) }
+  C2  { ~trusted(C),  ~access(C,D),  ~sealed(D),  permitted(C,D) }
+  C3  { ~inspects(E,F),  ~finds_mark(E,F),  verifies(E,F) }
+  C4  { ~stored(G,royal_archive),  sealed(G) }
+  C5  { stored(scroll_7,royal_archive) }
+  C6  { access(mira,scroll_7) }
+  C7  { inspects(mira,scroll_7) }
+  C8  { finds_mark(mira,scroll_7) }
+  C9  { archivist(mira) }
+  C10  { ~trusted(mira) }
+  (C10 is the negated goal.)
+
+==============================================================================
+STEP 8 : Resolution refutation (set of support = negated goal)
+==============================================================================
+  Input clauses are C1..C10; resolvents are numbered from C11.
+
+  C11 = Resolve(C10, C1) on trusted(mira)
+        => { ~archivist(mira),  ~verifies(mira,A) }
+  C12 = Resolve(C11, C3) on verifies(mira,A)
+        => { ~archivist(mira),  ~inspects(mira,A),  ~finds_mark(mira,A) }
+  C13 = Resolve(C11, C9) on archivist(mira)
+        => { ~verifies(mira,A) }
+  C14 = Resolve(C12, C7) on inspects(mira,scroll_7)
+        => { ~archivist(mira),  ~finds_mark(mira,scroll_7) }
+  C15 = Resolve(C12, C8) on finds_mark(mira,scroll_7)
+        => { ~archivist(mira),  ~inspects(mira,scroll_7) }
+  C16 = Resolve(C12, C9) on archivist(mira)
+        => { ~inspects(mira,A),  ~finds_mark(mira,A) }
+  C17 = Resolve(C14, C8) on finds_mark(mira,scroll_7)
+        => { ~archivist(mira) }
+  C18 = Resolve(C14, C9) on archivist(mira)
+        => { ~finds_mark(mira,scroll_7) }
+  C19 = Resolve(C15, C9) on archivist(mira)
+        => { ~inspects(mira,scroll_7) }
+  C20 = Resolve(C17, C9) on archivist(mira)
+        => []  (EMPTY CLAUSE)
+
+==============================================================================
+PROOF TRACE (only the clauses that contribute to the empty clause)
+==============================================================================
+  C1  { ~archivist(A),  ~verifies(A,B),  trusted(A) }     [kb]
+  C3  { ~inspects(A,B),  ~finds_mark(A,B),  verifies(A,B) }     [kb]
+  C7  { inspects(mira,scroll_7) }     [kb]
+  C8  { finds_mark(mira,scroll_7) }     [kb]
+  C9  { archivist(mira) }     [kb]
+  C10  { ~trusted(mira) }     [kb]
+  C11  { ~archivist(mira),  ~verifies(mira,A) }     [Resolve C10, C1 on trusted(mira)]
+  C12  { ~archivist(mira),  ~inspects(mira,A),  ~finds_mark(mira,A) }     [Resolve C11, C3 on verifies(mira,A)]
+  C14  { ~archivist(mira),  ~finds_mark(mira,scroll_7) }     [Resolve C12, C7 on inspects(mira,scroll_7)]
+  C17  { ~archivist(mira) }     [Resolve C14, C8 on finds_mark(mira,scroll_7)]
+  C20  []  (EMPTY CLAUSE)     [Resolve C17, C9 on archivist(mira)]
+
+The EMPTY CLAUSE [] has been derived.
+KB + ~trusted(mira) is unsatisfiable  =>  trusted(mira) follows from the KB. QED.

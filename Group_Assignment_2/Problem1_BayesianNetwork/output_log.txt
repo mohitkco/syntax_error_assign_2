@@ -1,0 +1,214 @@
+/usr/local/lib/python3.12/dist-packages/pgmpy/estimators/__init__.py:4: FutureWarning: `pgmpy.estimators.StructureScore` is deprecated and will be removed in v1.3.0. Use `pgmpy.structure_score` instead.
+  from .StructureScore import (
+
+==============================================================================
+PART A : EXPERT BAYESIAN NETWORK
+==============================================================================
+Edges : [('Weather', 'AC'), ('AC', 'Energy'), ('Occupancy', 'AC'), ('Occupancy', 'ApplianceLoad'), ('DayType', 'Occupancy'), ('ApplianceLoad', 'Energy')]
+Model check_model() -> True (structure + CPDs consistent)
+
+CPT column-sum verification (each parent configuration must sum to 1):
+  P(Weather      | parents) : sums = [1.0]  -> OK
+  P(DayType      | parents) : sums = [1.0]  -> OK
+  P(Occupancy    | parents) : sums = [1.0, 1.0]  -> OK
+  P(AC           | parents) : sums = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]  -> OK
+  P(ApplianceLoad| parents) : sums = [1.0, 1.0]  -> OK
+  P(Energy       | parents) : sums = [1.0, 1.0, 1.0, 1.0]  -> OK
+All CPTs valid: True
+
+Network figure saved -> output/bayesian_network.png
+
+Expert-model query results:
+  Q1: P(E=High)                        = 0.580631
+  Q2: P(E=High | W=Hot)                = 0.706266
+  Q3: P(E=High | D=Weekend)            = 0.640199
+  Q4: P(E=High | W=Cold, O=High)       = 0.484250
+  Q5: P(W=Hot | E=High)                = 0.608188
+  Q6: P(AC=On | E=High)                = 0.692867
+  Q7: P(AC=On | E=High, L=Heavy)       = 0.649899
+
+A.5  Q6 vs Q7 (explaining away)
+  Q6 P(AC=On | E=High)               = 0.6929
+  Q7 P(AC=On | E=High, Load=Heavy)   = 0.6499
+  Prior P(AC=On)                     = 0.4854
+  Change Q7-Q6 = -0.0430
+  Explanation: AC and ApplianceLoad are the two parents (causes) of Energy, so Energy is a
+  collider (AC -> E <- L).  Observing E=High raises belief in *both* causes.  Once we also learn
+  that Load=Heavy, that cause already 'explains' the high consumption, so the need to invoke the
+  other cause (AC=On) is reduced: P(AC=On) falls from Q6 to Q7.  This is 'explaining away'.
+
+==============================================================================
+A.6  HAND CALCULATION OF Q1 = P(E = High)
+==============================================================================
+Step 1  P(O=High) = 0.45*0.7 + 0.80*0.3 = 0.315 + 0.240 = 0.5550;  P(O=Low) = 0.4450
+Step 2  (W is independent of O)  P(AC=On | O) = sum_w P(w) P(On|w,O)
+        P(On|O=High) = .5*.9 + .3*.4 + .2*.1   = 0.5900
+        P(On|O=Low ) = .5*.6 + .3*.15 + .2*.05 = 0.3550
+Step 3  Given O, AC and Load are independent, so for each O:
+        P(E=High|O) = sum_{a,l} P(a|O) P(l|O) P(E=High|a,l)
+        O=High:
+           P(AC=On ,L=Heavy|O)=0.44250 x P(E=H|..)=0.92 = 0.40710
+           P(AC=On ,L=Light|O)=0.14750 x P(E=H|..)=0.68 = 0.10030
+           P(AC=Off,L=Heavy|O)=0.30750 x P(E=H|..)=0.55 = 0.16912
+           P(AC=Off,L=Light|O)=0.10250 x P(E=H|..)=0.12 = 0.01230
+           P(E=High|O=High) = 0.68883
+           contribution  P(O=High) x 0.68883 = 0.38230
+        O=Low:
+           P(AC=On ,L=Heavy|O)=0.12425 x P(E=H|..)=0.92 = 0.11431
+           P(AC=On ,L=Light|O)=0.23075 x P(E=H|..)=0.68 = 0.15691
+           P(AC=Off,L=Heavy|O)=0.22575 x P(E=H|..)=0.55 = 0.12416
+           P(AC=Off,L=Light|O)=0.41925 x P(E=H|..)=0.12 = 0.05031
+           P(E=High|O=Low) = 0.44569
+           contribution  P(O=Low) x 0.44569 = 0.19833
+Step 4  Q1 = 0.580631
+Code (variable elimination) gives Q1 = 0.580631   -> match: True
+
+==============================================================================
+PART B : CONDITIONAL INDEPENDENCE (d-separation)
+==============================================================================
+
+1. Weather _|_ DayType
+  d-separated (pgmpy)  : True
+  Reasoning            : Only path: W->A<-O<-D.  A (collider) is unobserved and has no observed descendant -> BLOCKED. Independent.
+  Numeric : P(Weather=Hot|-) = 0.500000   vs   P(Weather=Hot|DayType=Weekend) = 0.500000   |diff| = 0.00e+00
+  Conclusion: INDEPENDENT (values equal)
+
+2. Weather _|_ DayType | Energy
+  d-separated (pgmpy)  : False
+  Reasoning            : Path W->A<-O<-D: collider A has an observed descendant E -> collider OPENED; O is a non-collider and unobserved -> path ACTIVE. NOT independent.
+  Numeric : P(Weather=Hot|Energy=High) = 0.608188   vs   P(Weather=Hot|Energy=High,DayType=Weekend) = 0.599751   |diff| = 8.44e-03
+  Conclusion: DEPENDENT (values differ)
+
+3. Weather _|_ ApplianceLoad | Occupancy
+  d-separated (pgmpy)  : True
+  Reasoning            : Path W->A<-O->L : O is an observed fork -> BLOCKED (collider A also unobserved). Path W->A->E<-L : E collider unobserved -> BLOCKED. Independent.
+  Numeric : P(Weather=Hot|Occupancy=High) = 0.500000   vs   P(Weather=Hot|Occupancy=High,ApplianceLoad=Heavy) = 0.500000   |diff| = 0.00e+00
+  Conclusion: INDEPENDENT (values equal)
+
+==============================================================================
+PART C : SYNTHETIC DATA (ancestral sampling, seed = 42)
+==============================================================================
+
+--- Dataset n = 500 ---
+Empirical Weather frequency (true: Hot .50, Mild .30, Cold .20):
+Weather
+Hot     0.510
+Mild    0.286
+Cold    0.204
+Counts per (Weather, Occupancy):
+Occupancy  High  Low
+Weather             
+Hot         155  100
+Mild         75   68
+Cold         51   51
+
+--- Dataset n = 5000 ---
+Empirical Weather frequency (true: Hot .50, Mild .30, Cold .20):
+Weather
+Hot     0.4992
+Mild    0.3020
+Cold    0.1988
+Counts per (Weather, Occupancy):
+Occupancy  High   Low
+Weather              
+Hot        1402  1094
+Mild        823   687
+Cold        558   436
+
+--- Dataset n = 20000 ---
+Empirical Weather frequency (true: Hot .50, Mild .30, Cold .20):
+Weather
+Hot     0.4953
+Mild    0.3058
+Cold    0.1989
+Counts per (Weather, Occupancy):
+Occupancy  High   Low
+Weather              
+Hot        5520  4386
+Mild       3416  2700
+Cold       2228  1750
+
+==============================================================================
+PART D : LEARNING FROM DATA (MLE and BDeu, equivalent sample size = 10)
+==============================================================================
+
+--- n = 500 : learned CPT of AC Usage, P(AC=On | Weather, Occupancy) ---
+                   Expert     MLE    BDeu  |MLE-Exp|  |BDeu-Exp|
+Weather Occupancy                                               
+Hot     High         0.90  0.8516  0.8479     0.0484      0.0521
+        Low          0.60  0.6600  0.6574     0.0600      0.0574
+Mild    High         0.40  0.3600  0.3630     0.0400      0.0370
+        Low          0.15  0.1765  0.1842     0.0265      0.0342
+Cold    High         0.10  0.0980  0.1108     0.0020      0.0108
+        Low          0.05  0.0196  0.0348     0.0304      0.0152
+
+=== PART E : comparison table, n = 500 ===
+Query                Description  Expert     MLE  Bayesian  |Diff| MLE  |Diff| Bayesian
+   Q1                  P(E=High) 0.58063 0.55698   0.55594     0.02365          0.02469
+   Q2          P(E=High | W=Hot) 0.70627 0.70497   0.69911     0.00130          0.00716
+   Q3      P(E=High | D=Weekend) 0.64020 0.60924   0.60456     0.03096          0.03564
+   Q4 P(E=High | W=Cold, O=High) 0.48425 0.42031   0.42679     0.06394          0.05746
+   Q5          P(W=Hot | E=High) 0.60819 0.64551   0.63698     0.03732          0.02879
+   Q6          P(AC=On | E=High) 0.69287 0.72798   0.72361     0.03511          0.03074
+   Q7 P(AC=On | E=High, L=Heavy) 0.64990 0.65837   0.65595     0.00847          0.00605
+Mean |Diff|  MLE = 0.02868   Bayesian = 0.02722
+
+--- n = 5000 : learned CPT of AC Usage, P(AC=On | Weather, Occupancy) ---
+                   Expert     MLE    BDeu  |MLE-Exp|  |BDeu-Exp|
+Weather Occupancy                                               
+Hot     High         0.90  0.8937  0.8933     0.0063      0.0067
+        Low          0.60  0.6188  0.6186     0.0188      0.0186
+Mild    High         0.40  0.3900  0.3903     0.0100      0.0097
+        Low          0.15  0.1514  0.1522     0.0014      0.0022
+Cold    High         0.10  0.1039  0.1051     0.0039      0.0051
+        Low          0.05  0.0482  0.0499     0.0018      0.0001
+
+=== PART E : comparison table, n = 5000 ===
+Query                Description  Expert     MLE  Bayesian  |Diff| MLE  |Diff| Bayesian
+   Q1                  P(E=High) 0.58063 0.57940   0.57925     0.00123          0.00138
+   Q2          P(E=High | W=Hot) 0.70627 0.70335   0.70279     0.00292          0.00348
+   Q3      P(E=High | D=Weekend) 0.64020 0.63993   0.63932     0.00027          0.00087
+   Q4 P(E=High | W=Cold, O=High) 0.48425 0.48598   0.48633     0.00173          0.00208
+   Q5          P(W=Hot | E=High) 0.60819 0.60599   0.60527     0.00220          0.00292
+   Q6          P(AC=On | E=High) 0.69287 0.68844   0.68808     0.00443          0.00479
+   Q7 P(AC=On | E=High, L=Heavy) 0.64990 0.64956   0.64932     0.00034          0.00058
+Mean |Diff|  MLE = 0.00187   Bayesian = 0.00230
+
+--- n = 20000 : learned CPT of AC Usage, P(AC=On | Weather, Occupancy) ---
+                   Expert     MLE    BDeu  |MLE-Exp|  |BDeu-Exp|
+Weather Occupancy                                               
+Hot     High         0.90  0.9013  0.9011     0.0013      0.0011
+        Low          0.60  0.6008  0.6007     0.0008      0.0007
+Mild    High         0.40  0.3970  0.3970     0.0030      0.0030
+        Low          0.15  0.1478  0.1480     0.0022      0.0020
+Cold    High         0.10  0.1041  0.1044     0.0041      0.0044
+        Low          0.05  0.0537  0.0541     0.0037      0.0041
+
+=== PART E : comparison table, n = 20000 ===
+Query                Description  Expert     MLE  Bayesian  |Diff| MLE  |Diff| Bayesian
+   Q1                  P(E=High) 0.58063 0.57682   0.57679     0.00381          0.00384
+   Q2          P(E=High | W=Hot) 0.70627 0.70278   0.70264     0.00349          0.00363
+   Q3      P(E=High | D=Weekend) 0.64020 0.63808   0.63792     0.00212          0.00228
+   Q4 P(E=High | W=Cold, O=High) 0.48425 0.48381   0.48390     0.00044          0.00035
+   Q5          P(W=Hot | E=High) 0.60819 0.60345   0.60327     0.00473          0.00492
+   Q6          P(AC=On | E=High) 0.69287 0.69219   0.69210     0.00067          0.00077
+   Q7 P(AC=On | E=High, L=Heavy) 0.64990 0.64995   0.64989     0.00005          0.00001
+Mean |Diff|  MLE = 0.00219   Bayesian = 0.00226
+
+==============================================================================
+PART E : MEAN ABSOLUTE DIFFERENCE vs DATASET SIZE
+==============================================================================
+    n  MAE_MLE  MAE_Bayesian
+  500  0.02868       0.02722
+ 5000  0.00187       0.00230
+20000  0.00219       0.00226
+Plot saved -> output/mae_vs_dataset_size.png
+
+Largest error at n=500 : MLE -> Q4 (0.0639),  Bayesian -> Q4 (0.0575)
+Evidence frequency in the 500-sample set:
+   (Weather=Cold, Occupancy=High) rows = 51  [evidence of Q4]
+   of which AC=On = 5  (true P(AC=On|Cold,High) = 0.10)
+   E=High rows = 280  [evidence of Q5, Q6]
+   E=High & Load=Heavy rows = 198  [Q7]
+
+Results written to ./output  (csv files, png figures)

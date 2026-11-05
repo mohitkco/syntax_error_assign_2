@@ -1,0 +1,106 @@
+==========================================================================================
+Planner: pyperplan | Scenario: base      | Configuration: satisficing (greedy best-first, h_FF)
+==========================================================================================
+Plan:
+   1. (move curiosity base siteb)
+   2. (collect-soft curiosity rock2 siteb bay1)
+   3. (move curiosity siteb base)
+   4. (deposit curiosity rock2 base bay1)
+   5. (move curiosity base sitea)
+   6. (move curiosity sitea sitec)
+   7. (move curiosity sitec sitee)
+   8. (pick-drill curiosity drill1 sitee)
+   9. (move curiosity sitee sitef)
+  10. (collect-hard curiosity rock5 sitef bay1 drill1)
+  11. (move curiosity sitef sitee)
+  12. (move curiosity sitee sitec)
+  13. (move curiosity sitec sitea)
+  14. (move curiosity sitea base)
+  15. (deposit curiosity rock5 base bay1)
+  16. (move curiosity base sitea)
+  17. (collect-soft curiosity rock1 sitea bay1)
+  18. (move curiosity sitea base)
+  19. (deposit curiosity rock1 base bay1)
+  20. (move curiosity base sitea)
+  21. (move curiosity sitea sitec)
+  22. (collect-hard curiosity rock3 sitec bay1 drill1)
+  23. (move curiosity sitec sited)
+  24. (move curiosity sited siteb)
+  25. (move curiosity siteb base)
+  26. (deposit curiosity rock3 base bay1)
+  27. (move curiosity base siteb)
+  28. (move curiosity siteb sited)
+  29. (collect-soft curiosity rock4 sited bay1)
+  30. (move curiosity sited siteb)
+  31. (move curiosity siteb base)
+  32. (deposit curiosity rock4 base bay1)
+
+Plan length (total number of actions) : 32   (moves: 21, non-move: 11)
+States expanded                        : 48
+Planning (search) time                 : 0.035 s   (wall clock incl. translation: 0.36 s)
+
+Goal verification (step-by-step simulation):
+  Final state facts of interest:
+    rover-at  : ['rover-at curiosity base']
+    has-drill : ['has-drill curiosity drill1']
+    bay-empty : ['bay-empty bay1', 'bay-empty bay2']
+    stored    : []
+    rock-at   : ['rock-at rock1 base', 'rock-at rock2 base', 'rock-at rock3 base', 'rock-at rock4 base', 'rock-at rock5 base']
+    drill-at  : []
+  Rocks at Base : ['rock1', 'rock2', 'rock3', 'rock4', 'rock5']
+  Both bays empty : True
+  Rover at Base   : True
+  ==> GOAL SATISFIED: True
+==========================================================================================
+Planner: pyperplan | Scenario: base      | Configuration: optimal (A*, admissible LM-cut)
+==========================================================================================
+Plan:
+   1. (move curiosity base siteb)
+   2. (move curiosity siteb sited)
+   3. (collect-soft curiosity rock4 sited bay2)
+   4. (move curiosity sited sitee)
+   5. (pick-drill curiosity drill1 sitee)
+   6. (move curiosity sitee sitef)
+   7. (collect-hard curiosity rock5 sitef bay1 drill1)
+   8. (move curiosity sitef sitee)
+   9. (move curiosity sitee sitec)
+  10. (move curiosity sitec sitea)
+  11. (move curiosity sitea base)
+  12. (deposit curiosity rock4 base bay2)
+  13. (deposit curiosity rock5 base bay1)
+  14. (move curiosity base sitea)
+  15. (collect-soft curiosity rock1 sitea bay2)
+  16. (move curiosity sitea sitec)
+  17. (collect-hard curiosity rock3 sitec bay1 drill1)
+  18. (move curiosity sitec sitea)
+  19. (move curiosity sitea base)
+  20. (deposit curiosity rock3 base bay1)
+  21. (deposit curiosity rock1 base bay2)
+  22. (move curiosity base siteb)
+  23. (collect-soft curiosity rock2 siteb bay2)
+  24. (move curiosity siteb base)
+  25. (deposit curiosity rock2 base bay2)
+
+Plan length (total number of actions) : 25   (moves: 14, non-move: 11)
+States expanded                        : 6969
+Planning (search) time                 : 54.000 s   (wall clock incl. translation: 54.21 s)
+
+Goal verification (step-by-step simulation):
+  Final state facts of interest:
+    rover-at  : ['rover-at curiosity base']
+    has-drill : ['has-drill curiosity drill1']
+    bay-empty : ['bay-empty bay1', 'bay-empty bay2']
+    stored    : []
+    rock-at   : ['rock-at rock1 base', 'rock-at rock2 base', 'rock-at rock3 base', 'rock-at rock4 base', 'rock-at rock5 base']
+    drill-at  : []
+  Rocks at Base : ['rock1', 'rock2', 'rock3', 'rock4', 'rock5']
+  Both bays empty : True
+  Rover at Base   : True
+  ==> GOAL SATISFIED: True
+
+==========================================================================================
+SUMMARY
+==========================================================================================
+Scenario  Configuration                              Plan len  Expanded  Time (s)
+base      satisficing (greedy best-first, h_FF)            32        48     0.035
+base      optimal (A*, admissible LM-cut)                  25      6969    54.000
